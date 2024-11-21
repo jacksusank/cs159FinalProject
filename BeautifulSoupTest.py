@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
 import requests
 
-file_name = "trump_speeches.txt"
+file_name = "harris_speeches.txt"
 
-urls={
+trump_urls={
     "https://rollcall.com/factbase/trump/transcript/donald-trump-speech-campaign-rally-reading-pennsylvania-november-4-2024/",
     "https://rollcall.com/factbase/trump/transcript/donald-trump-speech-campaign-rally-raleigh-north-carolina-november-4-2024/",
     "https://rollcall.com/factbase/trump/transcript/donald-trump-speech-campaign-rally-grand-rapids-michigan-november-4-2024/",
@@ -44,10 +44,30 @@ urls={
     "https://rollcall.com/factbase/trump/transcript/donald-trump-speech-campaign-rally-reno-nevada-october-11-2024/",
     "https://rollcall.com/factbase/trump/transcript/donald-trump-speech-campaign-rally-aurora-colorado-october-11-2024/"
 }
+
+kamala_urls={
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-remarks-campaign-event-kalamazoo-michigan-october-26-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-remarks-campaign-event-atlanta-october-19-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-remarks-campaign-event-waterford-township-michigan-october-18-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-speech-economic-club-pittsburgh-september-25-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-speech-speaks-at-a-campaign-event-savannah-georgia-august-29-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-speech-democratic-nomination-acceptance-chicago-august-22-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-speech-campaign-rally-milwaukee-august-20-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-speech-campaign-rally-las-vegas-august-10-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-speech-campaign-rally-phoenix-august-9-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-speech-campaign-rally-romulus-michigan-august-8-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-speech-campaign-rally-eau-claire-wisconsin-august-7-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-speech-campaign-rally-tim-walz-philadelphia-august-6-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-speech-eulogy-sheila-jackson-lee-houston-august-1-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-speech-sigma-gamma-rho-biennial-houston-july-31-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-speech-campaign-event-atlanta-july-30-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-speech-american-federation-teachers-houston-july-25-2024/",
+    "https://rollcall.com/factbase/harris/transcript/kamala-harris-speech-campaign-event-milwaukee-july-23-2024/"
+}
     
 with open(file_name, "w") as file:
 
-    for url in urls:
+    for url in kamala_urls:
         headers = {
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
@@ -71,7 +91,7 @@ with open(file_name, "w") as file:
             for child in children:
                 if child.name == "div":
                     h2_element = child.find("h2", class_="text-md inline")
-                    if h2_element and "Donald Trump" in h2_element.get_text():
+                    if h2_element and "Kamala Harris" in h2_element.get_text():
                         text_element = child.find("div", class_="flex-auto text-md text-gray-600 leading-loose")
                         if text_element:
                             file.write(text_element.get_text(strip=True))
